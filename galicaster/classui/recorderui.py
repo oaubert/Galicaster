@@ -30,8 +30,8 @@ from galicaster.mediapackage import mediapackage
 from galicaster.recorder import Recorder
 
 from galicaster.utils import series
+from galicaster.utils import readable
 from galicaster.classui.metadata import MetadataClass as Metadata
-from galicaster.classui import statusbar as status_bar
 from galicaster.classui.audiobar import Vumeter
 from galicaster.classui.events import EventManager
 from galicaster.classui.about import GCAboutDialog
@@ -106,7 +106,7 @@ class RecorderClassUI(gtk.Box):
         self.current_mediapackage = None
         self.current = None
         self.next = None
-        self.restarting = False
+        self.start_recording = False
         self.font = None
         self.scheduled_recording = False
         self.focus_is_active = False
@@ -125,21 +125,15 @@ class RecorderClassUI(gtk.Box):
         self.vubox = builder.get_object("vubox")
         self.gui = builder
 
-        # BIG STATUS
+        # STATUS
         big_status = builder.get_object("bg_status")
         self.view = self.set_status_view()
         big_status.add(self.view)
-
-        # STATUS BAR
-        self.statusbar=status_bar.StatusBarClass()
-        self.dispatcher.connect("update-rec-status", self.statusbar.SetStatus)
-        self.dispatcher.connect("update-video", self.statusbar.SetVideo)
         self.dispatcher.connect("galicaster-init", self.check_status_area)
         self.dispatcher.connect("galicaster-init", self.check_net)
         self.dispatcher.connect("restart-preview", self.check_status_area)
         self.dispatcher.connect("net-up", self.check_net, True)        
         self.dispatcher.connect("net-down", self.check_net, False)        
-        self.statusbar.SetTimer(0)
 
         # VUMETER
         self.audiobar=Vumeter()
@@ -190,7 +184,6 @@ class RecorderClassUI(gtk.Box):
         # SCHEDULER FEEDBACK
         self.scheduler_thread_id = 1
         self.clock_thread_id = 1
-        self.start_thread_id = None
 
         self.scheduler_thread = thread(target=self.scheduler_launch_thread)
         self.clock_thread = thread(target=self.clock_launch_thread)
@@ -198,7 +191,6 @@ class RecorderClassUI(gtk.Box):
         self.clock_thread.daemon = True
         self.scheduler_thread.start()
         self.clock_thread.start() 
-        self.dispatcher.emit("galicaster-init")
 
         # SHOW OR HIDE SWAP BUTTON
         if self.conf.get_boolean('basic', 'swapvideos'):
@@ -214,7 +206,6 @@ class RecorderClassUI(gtk.Box):
             self.swap = True
         self.dispatcher.emit("reload-profile")
         self.audiobar.mute = False        
-        self.audiobar.SetVumeter
 
     def select_devices(self):
         """Loads the bins and creates the preview areas for the active profile, creating a new mediapacakge."""
@@ -223,39 +214,8 @@ class RecorderClassUI(gtk.Box):
         now = datetime.datetime.now().replace(microsecond=0)
         self.mediapackage = mediapackage.Mediapackage(title=_("Recording started at {0}").format(now.isoformat()))
 
-        context.get_state().mp=self.mediapackage.identifier
+        context.get_state().mp = self.mediapackage.identifier
 
-        # profile load depending of the swap value 
-        if self.swap:
-            self.conf.orde_current_profile()            
-            self.conf.reverse_current_profile()
-        else:
-            self.conf.reverse_current_profile()
-            self.conf.orde_current_profile()
-
-        current_profile = self.conf.get_current_profile()
-        bins = current_profile.tracks
-
-        for objectbin in bins:
-            objectbin['path']=self.repo.get_rectemp_path()
-        devices = current_profile.get_video_areas()
-        areas = self.create_drawing_areas(devices)  
-
-        self.bins = bins
-        self.areas = areas
-        
-        if self.error_dialog:
-            if self.error_id:
-                self.dispatcher.disconnect(self.error_id)
-                self.error_id = None
-            self.error_dialog.dialog_destroy()
-            self.error_dialog = None
-            self.error_text = None
-
-        self.error_id = self.dispatcher.connect(
-            "recorder-error",
-            self.handle_pipeline_error)
-        self.audiobar.ClearVumeter()
         if self.ok_to_show:
             self.init_recorder()
         return True
@@ -277,19 +237,49 @@ class RecorderClassUI(gtk.Box):
         self.select_devices()
 
     def init_recorder(self):
-        self.recorder = Recorder(self.bins, self.areas) 
+        if self.error_dialog:
+            if self.error_id:
+                self.dispatcher.disconnect(self.error_id)
+                self.error_id = None
+            self.error_dialog.dialog_destroy()
+            self.error_dialog = None
+            self.error_text = None
+        self.error_id = self.dispatcher.connect(
+            "recorder-error",
+            self.handle_pipeline_error)
+        self.audiobar.ClearVumeter()
+        context.get_state().is_error = False
+
+        current_profile = self.conf.get_current_profile()
+        bins = current_profile.tracks
+        for objectbin in bins:
+            objectbin['path'] = self.repo.get_rectemp_path()
+
+        self.recorder = Recorder(bins) 
         self.recorder.mute_preview(not self.focus_is_active)   
-        ok = self.recorder.preview()
+        info = self.recorder.get_display_areas_info()
+        if self.swap: 
+            info.reverse()
+        areas = self.create_drawing_areas(info)
+        self.recorder.set_drawing_areas(areas)
+
+        if self.start_recording:
+            self.start_recording = False
+            ok = self.recorder.preview_and_record()
+            self.mediapackage = self.repo.get(self.current_mediapackage)
+            # NOTE only call on_rec to update UI. Recorder is already recording.
+            self.on_rec()
+        else:
+            ok = self.recorder.preview()
         if ok :
             if self.mediapackage.manual:
                 self.change_state(GC_PREVIEW)
         else:
-            if self.restarting:
-                logger.error("Restarting Preview Failed")
+            logger.error("Restarting Preview Failed")
+            context.get_state().is_error = True
             self.change_state(GC_ERROR)
             if self.scheduled_recording:
-                self.on_failed_scheduled(self.current_mediapackage)
-                
+                self.on_failed_scheduled(self.current_mediapackage)    
             # TODO kill counter in case of error and scheduler
 
     def go_ahead(self):
@@ -301,10 +291,23 @@ class RecorderClassUI(gtk.Box):
     def on_restart_preview(self, button=None, element=None): 
         """Restarting preview, commanded by record""" 
         logger.info("Restarting Preview")
+
+        close_duration = self.recorder.get_recorded_time() / gst.MSECOND
+
+        self.mediapackage.status = mediapackage.RECORDED
+        self.mediapackage.properties['origin'] = self.conf.hostname
+        self.repo.add_after_rec(self.mediapackage, self.recorder.get_bins_info(), 
+                                close_duration, self.mediapackage.manual)
+        
+        code = 'manual' if self.mediapackage.manual else 'scheduled'
+        if self.conf.get_lower('ingest', code) == 'immediately':
+            self.worker.ingest(self.mediapackage)
+        elif self.conf.get_lower('ingest', code) == 'nightly':
+            self.worker.ingest_nightly(self.mediapackage)
+
         self.conf.reload()
         #self.configure_profile()
         self.select_devices()
-        self.restarting = False
         return True
 
     def configure_profile(self):
@@ -422,8 +425,6 @@ class RecorderClassUI(gtk.Box):
 
     def close_recording(self):
         """Set the final data on the mediapackage, stop the record and restart the preview"""
-        paused = self.paused_time.total_seconds()*1000000000 # pass to ns
-        close_duration = int((self.recorder.get_time()-self.initial_time-paused)*1000/gst.SECOND)
         # To avoid error messages on stopping pipelines
         if self.error_dialog:
             if self.error_id:
@@ -435,17 +436,6 @@ class RecorderClassUI(gtk.Box):
         self.recorder.stop_record_and_restart_preview()
         self.change_state(GC_STOP)
 
-        self.mediapackage.status = mediapackage.RECORDED
-        self.mediapackage.properties['origin'] = self.conf.hostname
-        self.repo.add_after_rec(self.mediapackage, self.recorder.bins_desc, 
-                                close_duration, self.mediapackage.manual)
-        
-        code = 'manual' if self.mediapackage.manual else 'scheduled'
-        if self.conf.get_lower('ingest', code) == 'immediately':
-            self.worker.ingest(self.mediapackage)
-        elif self.conf.get_lower('ingest', code) == 'nightly':
-            self.worker.ingest_nightly(self.mediapackage)
-
         context.get_state().is_recording = False
         self.timer_thread_id = None
 
@@ -455,9 +445,7 @@ class RecorderClassUI(gtk.Box):
         self.conf.reload()
         self.current_mediapackage = identifier
         self.scheduled_recording = True
-        #a=thread(target=self.start_thread, args=(identifier,))
-        #a.daemon = False
-        #a.start()
+
         if self.status == GC_PREVIEW: # Record directly
             self.mediapackage = self.repo.get(self.current_mediapackage)
             self.on_rec() 
@@ -470,80 +458,18 @@ class RecorderClassUI(gtk.Box):
                 # In case of stop, restart with the overlapped job
 
             else: # Stop current recording, wait until prewiew restarted and record
-                self.restarting = True
+                self.start_recording = True
                 self.close_recording()                
-                while self.restarting:
-                    time.sleep(0.1) 
-                    #if self.start_thread_id == None:
-                    #    return
-                self.mediapackage = self.repo.get(self.current_mediapackage)   
-                self.on_rec()       
                       
         elif self.status == GC_INIT:  # Start Preview and Record
             self.on_start_button()
-            while self.record.get_status() != gst.STATE_PLAYING:
+            while self.recorder.get_status() != gst.STATE_PLAYING:
                 time.sleep(0.2)
-                if self.start_thread_id == None:
-                    return
             self.mediapackage = self.repo.get(self.current_mediapackage)
             self.on_rec()
 
         title = self.repo.get(identifier).title
         self.dispatcher.emit("update-video", title)
-
-    def start_thread(self,identifier):
-        """Thread handling a scheduled recording"""
-        self.start_thread_id = 1        
-        if self.status == GC_PREVIEW: # Record directly
-            self.mediapackage = self.repo.get(self.current_mediapackage)
-            context.get_state().mp = self.mediapackage.identifier
-            self.on_rec() 
-        
-        elif self.status in [ GC_RECORDING, GC_PAUSED ] :
-
-            if self.allow_overlap:
-                pass
-                # TODO: dont stop and extend recording until the end of the new interval
-                # In case of stop, restart with the overlapped job
-
-            else: # Stop current recording, wait until prewiew restarted and record
-                self.restarting = True
-                self.close_recording()                
-                while self.restarting:
-                    time.sleep(0.1) 
-                    if self.start_thread_id == None:
-                        return
-                self.mediapackage = self.repo.get(self.current_mediapackage)   
-                self.on_rec()       
-                      
-        elif self.status == GC_INIT:  # Start Preview and Record
-            self.on_start_button()
-            while self.recorder.get_status() != gst.STATE_PLAYING:
-                time.sleep(0.2)
-                if self.start_thread_id == None:
-                    return
-            self.mediapackage = self.repo.get(self.current_mediapackage)
-            self.on_rec()
-
-        elif self.status == GC_ERROR:
-            if self.error_dialog:
-                if self.error_id:
-                    self.dispatcher.disconnect(self.error_id)
-                    self.error_id = None
-                self.error_dialog.dialog_destroy()
-                self.error_dialog = None
-                self.error_text = None
-            self.on_start_button()
-            while self.recorder.get_status() != gst.STATE_PLAYING:
-                time.sleep(0.2)
-                if self.start_thread_id == None:
-                    return
-            self.mediapackage = self.repo.get(self.current_mediapackage)
-            self.on_rec()              
-
-        title = self.repo.get(identifier).title
-        self.dispatcher.emit("update-video", title)        
-        return None
 
     def on_scheduled_stop(self,source,identifier):
         """Updates the mediapackage information after a scheduled recoring."""
@@ -560,8 +486,6 @@ class RecorderClassUI(gtk.Box):
         self.current_mediapackage = None
         self.current = None
         self.scheduled_recording = False
-        self.start_thread_id = None
-
 
     def reload_state_and_permissions(self):
         """Force a state review in case permissions had changed."""
@@ -609,6 +533,7 @@ class RecorderClassUI(gtk.Box):
         If the recording are is active, shows it
         """
         self.change_state(GC_ERROR)
+        context.get_state().is_error = True
         self.recorder.stop_elements()
         context.get_state().is_recording = False
         if self.error_id:
@@ -695,36 +620,18 @@ class RecorderClassUI(gtk.Box):
 
     def timer_launch_thread(self):
         """Thread handling the recording elapsed time timer."""
-        
-        # Based on: http://pygstdocs.berlios.de/pygst-tutorial/seeking.html
-        
         thread_id= self.timer_thread_id
-        self.initial_time=self.recorder.get_time()
-        self.initial_datetime=datetime.datetime.utcnow().replace(microsecond = 0)
-        gtk.gdk.threads_enter()
-        self.statusbar.SetTimer(0)
-        gtk.gdk.threads_leave()
-        self.paused_time = datetime.timedelta(0,0)
-
         rec_title = self.gui.get_object("recording1")
         rec_elapsed = self.gui.get_object("recording3")
-              
+             
         while thread_id == self.timer_thread_id:            
-        #while True:
-            actual_time=self.recorder.get_time()               
-            timer=(actual_time-self.initial_time)/gst.SECOND
-            if self.status==GC_PAUSED:
-                self.paused_time = self.paused_time + datetime.timedelta(0,0,200000)               
-            dif = datetime.datetime.utcnow() - self.initial_datetime - self.paused_time
-
-            if thread_id==self.timer_thread_id:
-                gtk.gdk.threads_enter()
-                self.statusbar.SetTimer(timer)
-                if rec_title.get_text() != self.mediapackage.getTitle():
-                    rec_title.set_text(self.mediapackage.getTitle())
-                rec_elapsed.set_text(_("Elapsed Time: ") + self.time_readable(dif))
-                gtk.gdk.threads_leave()
-            time.sleep(0.2)          
+            gtk.gdk.threads_enter()
+            if rec_title.get_text() != self.mediapackage.getTitle():
+                rec_title.set_text(self.mediapackage.getTitle())
+            msec = datetime.timedelta(microseconds=(self.recorder.get_recorded_time()/1000))
+            rec_elapsed.set_text(_("Elapsed Time: ") + readable.long_time(msec))
+            gtk.gdk.threads_leave()
+            time.sleep(0.5)          
         return True
 
     def scheduler_launch_thread(self):
@@ -740,7 +647,9 @@ class RecorderClassUI(gtk.Box):
         # status_hours = self.gui.get_object("status2")
         # status_mh = self.gui.get_object("status3")
 
+        gtk.gdk.threads_enter()
         self.check_schedule()
+        gtk.gdk.threads_leave()
         parpadeo = True
         changed = False
         signalized = False
@@ -756,7 +665,7 @@ class RecorderClassUI(gtk.Box):
         bold = pango.AttrWeight(700, 0, -1)
         red = pango.AttrForeground(65535, 0, 0, 0, -1)        
         black = pango.AttrForeground(17753, 17753, 17753, 0, -1)
-        font=pango.AttrFontDesc(self.font, 0, -1)
+        font = pango.AttrFontDesc(self.font, 0, -1)
 
         attr_red = pango.AttrList()
         attr_black = pango.AttrList()
@@ -769,9 +678,13 @@ class RecorderClassUI(gtk.Box):
         attr_black.insert(font)
         attr_black.insert(bold)
 
+        gtk.gdk.threads_enter()
         status.set_attributes(attr_black)
-        one_second=datetime.timedelta(seconds=1)
+        gtk.gdk.threads_leave()
+
+        one_second = datetime.timedelta(seconds=1)
         while thread_id == self.scheduler_thread_id: 
+            gtk.gdk.threads_enter()
             if self.font != changing_font:
                 attr_black.insert(pango.AttrFontDesc(self.font, 0, -1))
                 attr_red.insert(pango.AttrFontDesc(self.font, 0, -1))
@@ -787,7 +700,7 @@ class RecorderClassUI(gtk.Box):
                     self.current_mediapackage = None
                     status.set_text("")
                 else:
-                    status.set_text(_("Stopping in {0}").format(self.time_readable(dif+one_second)))
+                    status.set_text(_("Stopping in {0}").format(readable.long_time(dif+one_second)))
                     if event_type.get_text() != CURRENT_TEXT:
                         event_type.set_text(CURRENT_TEXT) 
                     if title.get_text() != self.current.title:
@@ -811,7 +724,7 @@ class RecorderClassUI(gtk.Box):
                     event_type.set_text(NEXT_TEXT)
                 if title.get_text() != self.next.title:
                     title.set_text(self.next.title)
-                status.set_text(_("Starting in {0}").format(self.time_readable(dif)))
+                status.set_text(_("Starting in {0}").format(readable.long_time(dif)))
 
                 if dif < datetime.timedelta(0,TIME_RED_START):
                     if not changed:
@@ -843,9 +756,12 @@ class RecorderClassUI(gtk.Box):
                     status.set_text("")
                 if title.get_text() != _("No upcoming events"):
                     title.set_text(_("No upcoming events"))
+            gtk.gdk.threads_leave()
                 
             time.sleep(0.5)
-            self.check_schedule()            
+            gtk.gdk.threads_enter()
+            self.check_schedule()  
+            gtk.gdk.threads_leave()          
         return True
 
 
@@ -859,35 +775,11 @@ class RecorderClassUI(gtk.Box):
         while thread_id == self.clock_thread_id:            
             if thread_id==self.clock_thread_id:
                 clocktime = datetime.datetime.now().time().strftime("%H:%M")
-                clock.set_label(clocktime)           
+                gtk.gdk.threads_enter()
+                clock.set_label(clocktime)
+                gtk.gdk.threads_leave()
             time.sleep(1)          
         return True
-
-
-    def time_readable(self, timedif):
-        """
-        Take a timedelta and return it formatted
-        """       
-           
-        if timedif < datetime.timedelta(0,300): # 5 minutes tops
-            formatted = "{minutes:02d}:{seconds:02d}".format( 
-                            minutes = timedif.seconds // 60, 
-                            seconds = timedif.seconds % 60 )
-        elif timedif < datetime.timedelta(1,0): # 24 hours
-            formatted = "{hours:02d}:{minutes:02d}:{seconds:02d}".format(
-                hours =  timedif.days*24 + timedif.seconds // 3600, 
-                minutes = timedif.seconds % 3600 // 60 ,
-                seconds = timedif.seconds % 60 
-                )
-        else: # days
-            today = datetime.datetime.now()
-            then = today + timedif
-            dif = then.date() - today.date()
-            formatted = "{days} day{plural}".format(
-                days =  dif.days,
-                plural = 's' if dif.days >1 else '')
-
-        return formatted
     
    
     def check_schedule(self):
@@ -913,9 +805,6 @@ class RecorderClassUI(gtk.Box):
         if not self.scheduled_recording:
             Metadata(self.mediapackage, series.get_series(), parent=self)
             mp = self.mediapackage
-            self.statusbar.SetVideo(None,mp.getTitle())
-            if self.mediapackage.getCreator() != None:
-                self.statusbar.SetPresenter(None,mp.getCreator() if mp.getCreator() != None else '')
             self.dispatcher.emit("enable-no-audio")
         #self.change_state(self.previous)  
         return True 
@@ -945,26 +834,27 @@ class RecorderClassUI(gtk.Box):
 
     # -------------------------- UI ACTIONS -----------------------------
 
-    def create_drawing_areas(self, source):
+    def create_drawing_areas(self, sources):
         """Create as preview areas as video sources exits"""
         main = self.main_area
 
         for child in main.get_children():
             main.remove(child)
             child.destroy()        
-        areas = None
+
         areas = dict()
-        for key,value in source.iteritems():
+        for source in sources:
             new_area = gtk.DrawingArea()
-            new_area.set_name("videoarea"+str(key))
+            new_area.set_name(source)
             new_area.modify_bg(gtk.STATE_NORMAL, gtk.gdk.color_parse("black"))
-            areas[re.sub(r'\W+', '', value)]=new_area
-            main.pack_start(new_area,True,True,int(self.proportion*3))
+            areas[source] = new_area
+            main.pack_start(new_area, True, True, int(self.proportion*3))
 
         for child in main.get_children():
             child.show()
          
         return areas
+
 
     def event_change_mode(self, orig, old_state, new_state):
         """Handles the focus or the Rercording Area, launching messages when focus is recoverde"""
@@ -975,6 +865,7 @@ class RecorderClassUI(gtk.Box):
             if self.error_text:            
                 if self.status != GC_ERROR:
                     self.change_state(GC_ERROR)
+                    context.get_state().is_error = True
                 self.launch_error_message(self.error_text)            
 
         if old_state == 0:
@@ -1036,7 +927,9 @@ class RecorderClassUI(gtk.Box):
         # s3 = self.gui.get_object("status3")
         s4 = self.gui.get_object("status4")
  
-        freespace,text_space=status_bar.GetFreeSpace(self.repo.get_rectemp_path())
+        freespace = self.repo.get_free_space()
+        text_space = readable.size(freespace)
+        
         s1.set_text(text_space)
         four_gb = 4000000000.0
         hours = int(freespace/four_gb)
@@ -1293,7 +1186,6 @@ class RecorderClassUI(gtk.Box):
             self.close_recording() 
         self.scheduler_thread_id = None
         self.clock_thread_id = None
-        self.start_thread_id = None
         if self.status in [GC_PREVIEW]:
             self.recorder.stop_preview()        
         return True        

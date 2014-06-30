@@ -5,82 +5,81 @@
 # Hugo Caloto <hcaloto@teltek.es>, 2014.
 # Rubén Pérez <rubenperez@teltek.es>, 2014.
 #
-#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: galicaster 1.3.1\n"
 "Report-Msgid-Bugs-To: galicaster@teltek.es\n"
 "POT-Creation-Date: 2014-01-22 10:11+0100\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"PO-Revision-Date: 2014-02-25 14:18+0100\n"
+"Last-Translator: Kristof Keppens <k.keppens@ugent.be>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
-"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.5.4\n"
 
 #: galicaster/mediapackage/mediapackage.py:69
 msgid "No"
-msgstr ""
+msgstr "Nee"
 
 #: galicaster/mediapackage/mediapackage.py:70
 msgid "Nightly"
-msgstr ""
+msgstr "Avond"
 
 #: galicaster/mediapackage/mediapackage.py:71
 msgid "Pending"
-msgstr ""
+msgstr "In afwachting"
 
 #: galicaster/mediapackage/mediapackage.py:72
 msgid "Processing"
-msgstr ""
+msgstr "In verwerking"
 
 #: galicaster/mediapackage/mediapackage.py:73
 msgid "Done"
-msgstr ""
+msgstr "Klaar"
 
 #: galicaster/mediapackage/mediapackage.py:74
 msgid "Failed"
-msgstr ""
+msgstr "Mislukt"
 
 #: galicaster/classui/message.py:33 galicaster/classui/managerui.py:35
 msgid "Export to Zip"
-msgstr ""
+msgstr "Exporteer naar Zip"
 
 #: galicaster/classui/message.py:34 galicaster/classui/managerui.py:36
 msgid "Export to Zip Nightly"
-msgstr ""
+msgstr "Exporteer naar Zip ( Avond )"
 
 #: galicaster/classui/message.py:35 galicaster/classui/managerui.py:37
 msgid "Cancel Zip Nightly"
-msgstr ""
+msgstr "Annuleer Zip ( Avond )"
 
 #: galicaster/classui/message.py:36 galicaster/classui/message.py:283
 #: galicaster/classui/managerui.py:38 galicaster/classui/listing.py:143
 #: resources/ui/conf.glade:476 resources/ui/listing.glade:136
 #: resources/ui/player.glade:331
 msgid "Ingest"
-msgstr ""
+msgstr "Verzend"
 
 #: galicaster/classui/message.py:37 galicaster/classui/managerui.py:39
 msgid "Ingest Nightly"
-msgstr ""
+msgstr "Verzend ( Avond )"
 
 #: galicaster/classui/message.py:38 galicaster/classui/managerui.py:40
 msgid "Cancel Ingest Nightly:"
-msgstr ""
+msgstr "Annuleer Verzenden ( Avond ) :"
 
 #: galicaster/classui/message.py:39 galicaster/classui/managerui.py:41
 msgid "Side by Side"
-msgstr ""
+msgstr "Side by Side"
 
 #: galicaster/classui/message.py:40 galicaster/classui/managerui.py:42
 msgid "Side by Side Nightly"
-msgstr ""
+msgstr "Side by Side ( Avond )"
 
 #: galicaster/classui/message.py:41 galicaster/classui/managerui.py:43
 msgid "Cancel SbS Nightly"
-msgstr ""
+msgstr "Annuleer SbS ( Avond )"
 
 #: galicaster/classui/message.py:42 galicaster/classui/managerui.py:44
 #: galicaster/classui/metadata.py:57 galicaster/classui/profile.py:416
@@ -89,689 +88,689 @@ msgstr ""
 #: resources/ui/metadata.glade:298 resources/ui/openfile.glade:38
 #: resources/ui/stop.glade:97
 msgid "Cancel"
-msgstr ""
+msgstr "Annuleer"
 
 #: galicaster/classui/message.py:293
 msgid "Export"
-msgstr ""
+msgstr "Exporteer"
 
 #: galicaster/classui/recorderui.py:65
 msgid "Initialization"
-msgstr ""
+msgstr "Initialisatie"
 
 #: galicaster/classui/recorderui.py:66
 msgid "Ready"
-msgstr ""
+msgstr "Klaar"
 
 #: galicaster/classui/recorderui.py:67
 msgid "Preview"
-msgstr ""
+msgstr "Voorbeschouwing"
 
 #: galicaster/classui/recorderui.py:70
 msgid "Paused"
-msgstr ""
+msgstr "Gepauzeerd"
 
 #: galicaster/classui/recorderui.py:71
 msgid "Stopped"
-msgstr ""
+msgstr "Gestopt"
 
 #: galicaster/classui/recorderui.py:72
 msgid "Blocked"
-msgstr ""
+msgstr "Geblokeerd"
 
 #: galicaster/classui/recorderui.py:73
 msgid "Waiting"
-msgstr ""
+msgstr "In afwachting"
 
 #: galicaster/classui/recorderui.py:74
 msgid "Error"
-msgstr ""
+msgstr "Fout"
 
 #: galicaster/classui/recorderui.py:84
 msgid "Upcoming"
-msgstr ""
+msgstr "Opkomend"
 
 #: galicaster/classui/recorderui.py:85
 msgid "Current"
-msgstr ""
+msgstr "Huidig"
 
 #: galicaster/classui/recorderui.py:217
 msgid "Recording started at {0}"
-msgstr ""
+msgstr "Opname gestart op {0}"
 
 #: galicaster/classui/recorderui.py:392 galicaster/classui/recorderui.py:623
 #: resources/ui/conf.glade:182 resources/ui/distrib.glade:102
 msgid "Recorder"
-msgstr ""
+msgstr "Recorder"
 
 #: galicaster/classui/recorderui.py:393
 msgid ""
 "Are you sure you want to\n"
 "stop the recording?"
 msgstr ""
+"Ben je zeker dat je de opname\n"
+"wenst te stoppen?"
 
 #: galicaster/classui/recorderui.py:583 resources/ui/help.glade:7
 msgid "Help"
-msgstr ""
+msgstr "Hulp"
 
 #: galicaster/classui/recorderui.py:584
 msgid " Visit galicaster.teltek.es"
-msgstr ""
+msgstr "Bezoek galicaster.teltek.es"
 
 #: galicaster/classui/recorderui.py:585
 msgid " ...or contact us on our community list."
-msgstr ""
+msgstr "...of bezoek ons op onze community list."
 
 #: galicaster/classui/recorderui.py:624
 msgid ""
 " Please review your configuration \n"
 "or load another profile"
 msgstr ""
+"Gelieve de configuratie te bekijken\n"
+"of een ander profiel te laden."
 
 #: galicaster/classui/recorderui.py:721
 msgid "Elapsed Time: "
-msgstr ""
+msgstr "Verlopen tijd:"
 
 #: galicaster/classui/recorderui.py:786
 msgid "Stopping in {0}"
-msgstr ""
+msgstr "Opname stopt binnen {0}"
 
 #: galicaster/classui/recorderui.py:810
 msgid "Starting in {0}"
-msgstr ""
+msgstr "Opname start binnen {0}"
 
 #: galicaster/classui/recorderui.py:841 galicaster/classui/recorderui.py:842
 msgid "No upcoming events"
-msgstr ""
+msgstr "Geen toekomstige events"
 
 #: galicaster/classui/recorderui.py:1043
 msgid "{0} hours left"
-msgstr ""
+msgstr "Nog {0} uur resterend"
 
 #: galicaster/classui/managerui.py:232 galicaster/classui/managerui.py:367
 #: galicaster/classui/listing.py:371 resources/ui/distrib.glade:211
 msgid "Media Manager"
-msgstr ""
+msgstr "Media Manager"
 
 #: galicaster/classui/managerui.py:233
 msgid "Which operation do you want to perform?"
-msgstr ""
+msgstr "Welke operatie wenst u uit te voeren?"
 
 #: galicaster/classui/managerui.py:239
 msgid "The ingest service is disabled."
-msgstr ""
+msgstr "The verzend dienst is momenteel uitgeschakeld."
 
 #: galicaster/classui/managerui.py:242
 msgid "Ingest disabled because of network problems. "
-msgstr ""
+msgstr "Verzenden is niet mogegelijk wegens netwerk problemen."
 
 #: galicaster/classui/managerui.py:256
 msgid "{0} already performed"
-msgstr ""
+msgstr "{0} reeds uitgevoerd"
 
 #: galicaster/classui/managerui.py:258
 msgid "{0} will be performed tonight"
-msgstr ""
+msgstr "{0} worden deze avond uitgevoerd"
 
 #: galicaster/classui/managerui.py:365
 msgid "This action will remove the recording from the hard disk."
-msgstr ""
+msgstr "Deze actie zal de opname verwijderen van de harde schijf."
 
 #: galicaster/classui/managerui.py:366
 msgid "Recording: \"{0}\""
-msgstr ""
+msgstr "Opname:\"{0}\""
 
 #: galicaster/classui/managerui.py:368 resources/ui/delete.glade:117
 msgid "Are you sure you want to delete?"
-msgstr ""
+msgstr "Bent u zeker dat u dit wil verwijderen?"
 
 #: galicaster/classui/about.py:71
 msgid "About Galicaster {version}"
-msgstr ""
+msgstr "Over Galicaster {version}"
 
 #: galicaster/classui/about.py:73
 msgid "About"
-msgstr ""
+msgstr "Over"
 
 #: galicaster/classui/about.py:85
 msgid "Galicaster Website"
-msgstr ""
+msgstr "Galicaster Website"
 
 #: galicaster/classui/about.py:128
 msgid "Special thanks to..."
-msgstr ""
+msgstr "Met dank aan ..."
 
 #: galicaster/classui/mainwindow.py:58
 msgid "GaliCASTER {0}"
-msgstr ""
+msgstr "GaliCASTER {0}"
 
 #: galicaster/classui/mainwindow.py:154 resources/ui/distrib.glade:303
 #: resources/ui/quit.glade:7 resources/ui/quit.glade:97
 msgid "Quit"
-msgstr ""
+msgstr "Afsluiten"
 
 #: galicaster/classui/mainwindow.py:155
 msgid "Are you sure you want to QUIT? "
-msgstr ""
+msgstr "Bent u zeker dat u wil afsluiten"
 
 #: galicaster/classui/mainwindow.py:174
 msgid "Shutdwon"
-msgstr ""
+msgstr "Uitschakelen"
 
 #: galicaster/classui/mainwindow.py:175
 msgid "Are you sure you want to SHUTDOWN? "
-msgstr ""
+msgstr "Bent u zeker dat u wil uitschakelen"
 
 #: galicaster/classui/mpinfo.py:30 galicaster/classui/mpinfo.py:48
 #: galicaster/classui/metadata.py:40 resources/ui/metadata.glade:41
 msgid "Title:"
-msgstr ""
+msgstr "Titel:"
 
 #: galicaster/classui/mpinfo.py:31 galicaster/classui/mpinfo.py:49
 #: galicaster/classui/metadata.py:46 resources/ui/metadata.glade:215
 msgid "Identifier:"
-msgstr ""
+msgstr "Identificatie:"
 
 #: galicaster/classui/mpinfo.py:32
 msgid "Folder:"
-msgstr ""
+msgstr "Folder:"
 
 #: galicaster/classui/mpinfo.py:33
 msgid "Duration:"
-msgstr ""
+msgstr "Duur:"
 
 #: galicaster/classui/mpinfo.py:34
 msgid "Size:"
-msgstr ""
+msgstr "Grootte:"
 
 #: galicaster/classui/mpinfo.py:35
 msgid "Recorded on:"
-msgstr ""
+msgstr "Opgenomen op:"
 
 #: galicaster/classui/mpinfo.py:36 galicaster/classui/mpinfo.py:54
 msgid "License:"
-msgstr ""
+msgstr "Licentie:"
 
 #: galicaster/classui/mpinfo.py:37
 msgid "Temporal:"
-msgstr ""
+msgstr "Temporeel:"
 
 #: galicaster/classui/mpinfo.py:38
 msgid "Agent name:"
-msgstr ""
+msgstr "Opnametoestel:"
 
 #: galicaster/classui/mpinfo.py:39
 msgid "Series:"
-msgstr ""
+msgstr "Reeks:"
 
 #: galicaster/classui/mpinfo.py:40 galicaster/classui/mpinfo.py:51
 #: galicaster/classui/metadata.py:47 resources/ui/metadata.glade:239
 msgid "Contributor:"
-msgstr ""
+msgstr "Medewerker:"
 
 #: galicaster/classui/mpinfo.py:41 galicaster/classui/metadata.py:41
 #: resources/ui/metadata.glade:51
 msgid "Presenter:"
-msgstr ""
+msgstr "Presentator:"
 
 #: galicaster/classui/mpinfo.py:42 galicaster/classui/mpinfo.py:52
 #: galicaster/classui/metadata.py:44 resources/ui/metadata.glade:98
 msgid "Subject:"
-msgstr ""
+msgstr "Onderwerp:"
 
 #: galicaster/classui/mpinfo.py:43 galicaster/classui/mpinfo.py:53
 #: galicaster/classui/metadata.py:45 resources/ui/metadata.glade:87
 msgid "Language:"
-msgstr ""
+msgstr "Taal:"
 
 #: galicaster/classui/mpinfo.py:44 galicaster/classui/mpinfo.py:55
 #: galicaster/classui/metadata.py:43 resources/ui/metadata.glade:204
 msgid "Description:"
-msgstr ""
+msgstr "Omschrijving:"
 
 #: galicaster/classui/mpinfo.py:45
 msgid "Rights:"
-msgstr ""
+msgstr "Rechten:"
 
 #: galicaster/classui/mpinfo.py:50
 msgid "Creator:"
-msgstr ""
+msgstr "Maker:"
 
 #: galicaster/classui/mpinfo.py:76
 msgid "Mediapackage Info "
-msgstr ""
+msgstr "Mediapackage informatie"
 
 #: galicaster/classui/mpinfo.py:100
 msgid "Basic"
-msgstr ""
+msgstr "Basis"
 
 #: galicaster/classui/mpinfo.py:108 galicaster/classui/listing.py:308
 msgid "Operations"
-msgstr ""
+msgstr "Acties:"
 
 #: galicaster/classui/mpinfo.py:109
 msgid "Ingest:"
-msgstr ""
+msgstr "Verzend:"
 
 #: galicaster/classui/mpinfo.py:111
 msgid "Zipping:"
-msgstr ""
+msgstr "zip:"
 
 #: galicaster/classui/mpinfo.py:113
 msgid "Side by Side:"
-msgstr ""
+msgstr "Side by Side:"
 
 #: galicaster/classui/mpinfo.py:119 galicaster/classui/listing.py:137
 msgid "Series"
-msgstr ""
+msgstr "Reeks"
 
 #: galicaster/classui/mpinfo.py:125
 msgid "Tracks"
-msgstr ""
+msgstr "Sporen"
 
 #: galicaster/classui/mpinfo.py:131 galicaster/classui/mpinfo.py:144
 msgid "Name:"
-msgstr ""
+msgstr "Naam:"
 
 #: galicaster/classui/mpinfo.py:132 galicaster/classui/mpinfo.py:145
 msgid "Flavor:"
-msgstr ""
+msgstr "Flavor:"
 
 #: galicaster/classui/mpinfo.py:133 galicaster/classui/mpinfo.py:146
 msgid "Type:"
-msgstr ""
+msgstr "Type:"
 
 #: galicaster/classui/mpinfo.py:135 galicaster/classui/mpinfo.py:148
 msgid "File:"
-msgstr ""
+msgstr "Bestand:"
 
 #: galicaster/classui/mpinfo.py:138
 msgid "Catalogs"
-msgstr ""
+msgstr "Catalogus"
 
 #: galicaster/classui/mpinfo.py:167 galicaster/classui/profile.py:256
 #: galicaster/plugins/noaudiodialog.py:209
 msgid "Close"
-msgstr ""
+msgstr "Sluiten"
 
 #: galicaster/classui/mpinfo.py:168
 msgid "Open Folder"
-msgstr ""
+msgstr "Open Folder"
 
 #: galicaster/classui/metadata.py:42 resources/ui/metadata.glade:63
 msgid "Course/Series:"
-msgstr ""
+msgstr "Cursus/Reeks:"
 
 #: galicaster/classui/metadata.py:48 resources/ui/metadata.glade:75
 msgid "Start Time:"
-msgstr ""
+msgstr "Start tijd:"
 
 #: galicaster/classui/metadata.py:57 resources/ui/metadata.glade:22
 msgid "Edit Metadata"
-msgstr ""
+msgstr "Wijzig metadata"
 
 #: galicaster/classui/metadata.py:57 galicaster/classui/profile.py:412
 #: galicaster/classui/profile.py:512 resources/ui/conf.glade:1458
 #: resources/ui/metadata.glade:280
 msgid "Save"
-msgstr ""
+msgstr "Opslaan"
 
 #: galicaster/classui/profile.py:64 galicaster/classui/profile.py:71
 #: galicaster/classui/profile.py:85
 msgid "Profile Selector"
-msgstr ""
+msgstr "Profiel selectie"
 
 #: galicaster/classui/profile.py:151
 msgid "Profile Tracks"
-msgstr ""
+msgstr "Profiel tracks"
 
 #: galicaster/classui/profile.py:250 resources/ui/openfile.glade:25
 msgid "Select"
-msgstr ""
+msgstr "Selecteer"
 
 #: galicaster/classui/profile.py:252 galicaster/classui/profile.py:413
 #: galicaster/classui/listing.py:307 galicaster/classui/listing.py:313
 #: resources/ui/listing.glade:87 resources/ui/listing.glade:112
 #: resources/ui/player.glade:298 resources/ui/recorder.glade:622
 msgid "Edit"
-msgstr ""
+msgstr "Editeer"
 
 #: galicaster/classui/profile.py:253
 msgid "New"
-msgstr ""
+msgstr "Nieuw"
 
 #: galicaster/classui/profile.py:254
 msgid "Duplicate"
-msgstr ""
+msgstr "Dupliceer"
 
 #: galicaster/classui/profile.py:255 galicaster/classui/listing.py:310
 #: galicaster/classui/listing.py:315 resources/ui/delete.glade:7
 #: resources/ui/delete.glade:38 resources/ui/listing.glade:185
 #: resources/ui/listing.glade:210 resources/ui/player.glade:390
 msgid "Delete"
-msgstr ""
+msgstr "Verwijder"
 
 #: galicaster/classui/profile.py:414
 msgid "New track"
-msgstr ""
+msgstr "Nieuwe track"
 
 #: galicaster/classui/profile.py:415
 msgid "Delete track"
-msgstr ""
+msgstr "Verwijder track"
 
 #: galicaster/classui/profile.py:457
 msgid "New Track"
-msgstr ""
+msgstr "Nieuwe Track"
 
 #: galicaster/classui/listing.py:135
 msgid "Name"
-msgstr ""
+msgstr "Naam"
 
 #: galicaster/classui/listing.py:136 resources/ui/conf.glade:201
 #: resources/ui/conf.glade:239
 msgid "Presenter"
-msgstr ""
+msgstr "Presentator"
 
 #: galicaster/classui/listing.py:138
 msgid "Size"
-msgstr ""
+msgstr "Grootte"
 
 #: galicaster/classui/listing.py:139
 msgid "Duration"
-msgstr ""
+msgstr "Duur"
 
 #: galicaster/classui/listing.py:140
 msgid "Date"
-msgstr ""
+msgstr "Datum"
 
 #: galicaster/classui/listing.py:144
 msgid "Zip"
-msgstr ""
+msgstr "Zip"
 
 #: galicaster/classui/listing.py:145
 msgid "SbS"
-msgstr ""
+msgstr "SbS"
 
 #: galicaster/classui/listing.py:306 galicaster/classui/listing.py:312
 #: resources/ui/listing.glade:61
 msgid "Play"
-msgstr ""
+msgstr "Play"
 
 #: galicaster/classui/listing.py:309 galicaster/classui/listing.py:314
 msgid "Info"
-msgstr ""
+msgstr "Info"
 
 #: galicaster/classui/listing.py:372
 msgid "This recording can't be played"
-msgstr ""
+msgstr "Deze opname kan niet afgespeeld worden"
 
 #: galicaster/classui/events.py:66
 msgid "Next Recordings"
-msgstr ""
+msgstr "Volgende opnames"
 
 #: galicaster/classui/events.py:111 galicaster/classui/events.py:116
 msgid "Record Now"
-msgstr ""
+msgstr "Start opname"
 
 #: galicaster/classui/distrib.py:78
 msgid "Profile: {profileName}"
-msgstr ""
+msgstr "Profiel: {profileName}"
 
 #: galicaster/plugins/noaudiodialog.py:217
 msgid "Warning"
-msgstr ""
+msgstr "Waarschuwing"
 
 #: galicaster/plugins/noaudiodialog.py:222 resources/ui/warning.glade:41
 msgid "No Audio!!"
-msgstr ""
+msgstr "Geen audio!!!"
 
 #: galicaster/plugins/noaudiodialog.py:223
 msgid ""
 "Pick up the microphone\n"
 "Press the mute button"
 msgstr ""
+"Neem de microfoon\n"
+"druk op de mute knop"
 
 #: galicaster/plugins/setuprecording.py:86
 #: galicaster/plugins/setuprecording.py:87
 msgid "New Recording"
-msgstr ""
+msgstr "Nieuwe opname"
 
 #: galicaster/plugins/setuprecording.py:88
 msgid "Start"
-msgstr ""
+msgstr "Start"
 
 #: resources/ui/adminbar.glade:9
 msgid "Configure"
-msgstr ""
+msgstr "Configureer"
 
 #: resources/ui/adminbar.glade:21
 msgid "Volume"
-msgstr ""
+msgstr "Volume"
 
 #: resources/ui/adminbar.glade:33
 msgid "Metadata"
-msgstr ""
+msgstr "Metadata"
 
 #: resources/ui/adminbar.glade:45
 msgid "Restart Preview"
-msgstr ""
+msgstr "Herstart preview"
 
 #: resources/ui/adminbar.glade:57
 msgid "Fullscreen"
-msgstr ""
+msgstr "Schermvullend"
 
 #: resources/ui/conf.glade:37
 msgid "Repository Folder"
-msgstr ""
+msgstr "Repository folder"
 
 #: resources/ui/conf.glade:74
 msgid "Codec"
-msgstr ""
+msgstr "Codec"
 
 #: resources/ui/conf.glade:120
 msgid "General"
-msgstr ""
+msgstr "Algemeen"
 
 #: resources/ui/conf.glade:141
 msgid "Player"
-msgstr ""
+msgstr "Speler"
 
 #: resources/ui/conf.glade:212 resources/ui/conf.glade:250
 msgid "Presentation"
-msgstr ""
+msgstr "Presentatie"
 
 #: resources/ui/conf.glade:279
 msgid "Screen"
-msgstr ""
+msgstr "Scherm"
 
 #: resources/ui/conf.glade:303
 msgid "Host"
-msgstr ""
+msgstr "Host"
 
 #: resources/ui/conf.glade:314
 msgid "Username"
-msgstr ""
+msgstr "Gebruikersnaam"
 
 #: resources/ui/conf.glade:327
 msgid "Password"
-msgstr ""
+msgstr "Paswoord"
 
 #: resources/ui/conf.glade:416
 msgid "Workflow"
-msgstr ""
+msgstr "Workflow"
 
 #: resources/ui/conf.glade:496
 msgid "Device 1"
-msgstr ""
+msgstr "Toestel 1"
 
 #: resources/ui/conf.glade:512 resources/ui/conf.glade:744
 #: resources/ui/conf.glade:958 resources/ui/conf.glade:994
 #: resources/ui/conf.glade:1226
 msgid "Device"
-msgstr ""
+msgstr "Toestel"
 
 #: resources/ui/conf.glade:523 resources/ui/conf.glade:755
 #: resources/ui/conf.glade:1005 resources/ui/conf.glade:1237
 msgid "Location"
-msgstr ""
+msgstr "Locatie"
 
 #: resources/ui/conf.glade:536 resources/ui/conf.glade:768
 #: resources/ui/conf.glade:1018 resources/ui/conf.glade:1250
 msgid "Flavor"
-msgstr ""
+msgstr "Flavor"
 
 #: resources/ui/conf.glade:625 resources/ui/conf.glade:857
 #: resources/ui/conf.glade:1107 resources/ui/conf.glade:1339
 msgid "File"
-msgstr ""
+msgstr "Bestand"
 
 #: resources/ui/conf.glade:688 resources/ui/conf.glade:920
 #: resources/ui/conf.glade:1170 resources/ui/conf.glade:1402
 msgid "Active"
-msgstr ""
+msgstr "Actief"
 
 #: resources/ui/conf.glade:728
 msgid "Device 2"
-msgstr ""
+msgstr "Toestel 2"
 
 #: resources/ui/conf.glade:978
 msgid "Device 3"
-msgstr ""
+msgstr "Toestel 3"
 
 #: resources/ui/conf.glade:1210
 msgid "Device 4"
-msgstr ""
+msgstr "Toestel 4"
 
 #: resources/ui/conf.glade:1440
 msgid "Audio"
-msgstr ""
+msgstr "Audio"
 
 #: resources/ui/delete.glade:64 resources/ui/quit.glade:120
 msgid " Cancel "
-msgstr ""
+msgstr " Annuleer"
 
 #: resources/ui/distrib.glade:150
 msgid "label"
-msgstr ""
+msgstr "label"
 
 #: resources/ui/distrib.glade:271
 msgid "Galicaster Release 1 .3"
-msgstr ""
+msgstr "Galicaster Release 1 .3"
 
 #: resources/ui/distrib.glade:354
 msgid "Shutdown"
-msgstr ""
+msgstr "Afsluiten"
 
 #: resources/ui/listing.glade:161 resources/ui/player.glade:345
 msgid "Operation"
-msgstr ""
+msgstr "Actie"
 
 #: resources/ui/metadata.glade:7
 msgid "Edit Metadata..."
-msgstr ""
+msgstr "Editeer metadata"
 
 #: resources/ui/next.glade:7
 msgid " Event Manager"
-msgstr ""
+msgstr "Event manager"
 
 #: resources/ui/next.glade:34
 msgid "    OK    "
-msgstr ""
+msgstr "    OK    "
 
 #: resources/ui/next.glade:61
 msgid "Next recordings"
-msgstr ""
+msgstr "Volgende opnames"
 
 #: resources/ui/okwarning.glade:7 resources/ui/stop.glade:7
 msgid "Stop Recording"
-msgstr ""
+msgstr "Stop opname"
 
 #: resources/ui/okwarning.glade:43
 msgid "This recording can't be ingested yet?"
-msgstr ""
+msgstr "Deze opname kan nog niet verzonden worden?"
 
 #: resources/ui/okwarning.glade:73
 msgid "OK"
-msgstr ""
+msgstr "OK"
 
 #: resources/ui/openfile.glade:7
 msgid "Open mediapackage..."
-msgstr ""
+msgstr "Open mediapackage..."
 
 #: resources/ui/quit.glade:47
 msgid "Are you sure you want to QUIT?"
-msgstr ""
+msgstr "Bent u zeker dat u wil afsluiten"
 
 #: resources/ui/recorder.glade:188
 msgid "Next REC"
-msgstr ""
+msgstr "Volgende Opname"
 
 #: resources/ui/recorder.glade:232
 msgid "Very long title, this is always for sure"
-msgstr ""
+msgstr "Zeer lange titel, dit is altijd zeker zo"
 
 #: resources/ui/recorder.glade:247
 msgid "scheduled"
-msgstr ""
+msgstr "Ingepland"
 
 #: resources/ui/recorder.glade:266
 msgid "Events"
-msgstr ""
+msgstr "Events"
 
 #: resources/ui/recorder.glade:287
 msgid "Not recording"
-msgstr ""
+msgstr "Niet aan het opnemen"
 
 #: resources/ui/recorder.glade:323
 msgid "Recording"
-msgstr ""
+msgstr "Opnemen"
 
 #: resources/ui/recorder.glade:406
 msgid "Storage space left:  "
-msgstr ""
+msgstr "Opslagruimte resterend:"
 
 #: resources/ui/recorder.glade:420
 msgid "Agent name:  "
-msgstr ""
+msgstr "Opnametoestel:"
 
 #: resources/ui/recorder.glade:435
 msgid "Recording space:  "
-msgstr ""
+msgstr "Opslagruimte:"
 
 #: resources/ui/recorder.glade:450
 msgid "Core connectivity:  "
-msgstr ""
+msgstr "Verbinding server:"
 
 #: resources/ui/recorder.glade:472
 msgid "Status"
-msgstr ""
+msgstr "Status"
 
 #: resources/ui/recorder.glade:674
 msgid "HELP"
-msgstr ""
+msgstr "HELP"
 
 #: resources/ui/stop.glade:43
 msgid "Are you sure you want to stop the recording?"
-msgstr ""
+msgstr "Bent u zeker dat u de opname wilt stoppen?"
 
 #: resources/ui/stop.glade:74
 msgid "Stop"
-msgstr ""
+msgstr "Stop"
 
 #: resources/ui/warning.glade:6
 msgid "Warning!"
-msgstr ""
+msgstr "Waarschuwing!"
 
 #: resources/ui/warning.glade:66
 msgid ""
 "Pick up the microphone\n"
 "Pulse the mute button"
 msgstr ""
-
-#: galicaster/classui/recorderui.py:816
-msgid "day"
-msgstr ""
-
-#: galicaster/classui/recorderui.py:817
-msgid "days"
-msgstr ""
+"Neem de microfoon\n"
+"Druk op de mute knop"
